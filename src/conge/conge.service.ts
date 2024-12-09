@@ -4,36 +4,44 @@ import { CreateCongeDto } from './dto/create-conge.dto';
 import { UpdateCongeDto } from './dto/update-conge.dto';
 
 @Injectable()
-export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+export class CongeService {
+  constructor(private readonly prisma: PrismaService) {}
 
-  create(createCongeDto: CreateCongeDto) {
+  create(createCongeDto: CreateCongeDto & { userId: number }) {
     return this.prisma.conge.create({
-      data:createCongeDto
+      data: {
+        ...createCongeDto,
+        dateCreated: new Date(), // Assign current timestamp
+        etatConge: 'Pending',   // Default state
+      },
     });
   }
-
-  findAll() {
-    return this.prisma.conge.findMany();
+  
+  findAllByUser(userId: number) {
+    return this.prisma.conge.findMany({
+      where: {
+        userUserId: userId, // Correct field name
+      },
+    });
   }
+  
 
   findOne(id: number) {
     return this.prisma.conge.findUnique({
-      where: {id}
-      
+      where: { id },
     });
   }
 
-  update(id: number, updatecongeDto: UpdateCongeDto) {
+  update(id: number, updateCongeDto: UpdateCongeDto) {
     return this.prisma.conge.update({
-      data:updatecongeDto,
-      where:{id}
+      data: updateCongeDto,
+      where: { id },
     });
   }
 
   remove(id: number) {
-    this.prisma.conge.delete({
-      where:{id}
+    return this.prisma.conge.delete({
+      where: { id },
     });
   }
 }

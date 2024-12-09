@@ -17,23 +17,36 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
+  async getUserConges(userId: number) {
+    // Fetch the congés for the specified userId from the database
+    return this.prisma.conge.findMany({
+      where: {
+        userUserId: userId,  // Ensure the conge is associated with the correct userId
+      },
+    });
+  }
+
+
+
+
+  findOne(userId: number) {
     return this.prisma.user.findUnique({
-      where: {id}
+      where: {userId}
       
     });
   }
+  
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(userId: number, updateUserDto: UpdateUserDto) {
     return this.prisma.user.update({
       data:updateUserDto,
-      where:{id}
+      where:{userId}
     });
   }
 
-  remove(id: number) {
+  remove(userId: number) {
     this.prisma.user.delete({
-      where:{id}
+      where:{userId}
     });
   }
 }

@@ -1,34 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import { CongeService } from './conge.service';
 import { CreateCongeDto } from './dto/create-conge.dto';
 import { UpdateCongeDto } from './dto/update-conge.dto';
 
-@Controller('conge')
+@Controller('user/:userId/conges')
 export class CongeController {
   constructor(private readonly congeService: CongeService) {}
 
   @Post()
-  create(@Body() createCongeDto: CreateCongeDto) {
-    return this.congeService.create(createCongeDto);
+  @UsePipes(ValidationPipe)
+  create(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body() createCongeDto: CreateCongeDto,
+  ) {
+    return this.congeService.create({ ...createCongeDto, userId });
   }
 
   @Get()
-  findAll() {
-    return this.congeService.findAll();
+  findAllByUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.congeService.findAllByUser(userId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.congeService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCongeDto: UpdateCongeDto) {
-    return this.congeService.update(+id, updateCongeDto);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.congeService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.congeService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.congeService.remove(id);
   }
 }

@@ -12,6 +12,12 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  // Get congés for a specific user by userId
+  @Get(':userId/conges')
+  async getUserConges(@Param('userId') userId: string) {
+    return this.userService.getUserConges(+userId);  // Fetch congés based on userId
+  }
+
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -19,7 +25,7 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(+id);  // Using `+id` to cast the id to a number
   }
 
   @Patch(':id')
