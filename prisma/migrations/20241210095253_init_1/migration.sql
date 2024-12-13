@@ -15,7 +15,6 @@ CREATE TABLE `Conge` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `dateCreated` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dateDebut` DATETIME(3) NOT NULL,
-    `dateFin` DATETIME(3) NOT NULL,
     `nbreJour` INTEGER NOT NULL,
     `etatConge` VARCHAR(191) NOT NULL,
     `adressConge` VARCHAR(191) NOT NULL,

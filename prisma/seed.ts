@@ -3,60 +3,62 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create Users
+  // Seed Users
   const user1 = await prisma.user.upsert({
-    where: { email: 'johndoe@example.com' },
+    where: { email: 'john.doe@example.com' },
     update: {},
     create: {
       userId: 1,
-      password: 'securepassword123',
-      email: 'johndoe@example.com',
+      email: 'john.doe@example.com',
+      password: 'password123', // Use hashed passwords in production
       name: 'John Doe',
-      posts: 'Sample post content for John Doe.',
+      posts: 'First post',
     },
   });
 
   const user2 = await prisma.user.upsert({
-    where: { email: 'janedoe@example.com' },
+    where: { email: 'jane.doe@example.com' },
     update: {},
     create: {
       userId: 2,
-      password: 'securepassword456',
-      email: 'janedoe@example.com',
+      email: 'jane.doe@example.com',
+      password: 'securepassword', // Use hashed passwords in production
       name: 'Jane Doe',
-      posts: 'Sample post content for Jane Doe.',
+      posts: 'Another post',
     },
   });
 
-  // Create Conges for the Users
+  // Seed Conges
   await prisma.conge.createMany({
     data: [
       {
+        dateCreated: new Date(),
         dateDebut: new Date('2024-12-15'),
-        dateFin: new Date('2024-12-20'),
         nbreJour: 5,
         etatConge: 'Pending',
-        adressConge: '123 Holiday Lane',
+        adressConge: '123 Vacation Lane',
         userUserId: user1.userId,
       },
       {
-        dateDebut: new Date('2024-12-25'),
-        dateFin: new Date('2024-12-30'),
-        nbreJour: 5,
+        dateCreated: new Date(),
+        dateDebut: new Date('2024-12-20'),
+        nbreJour: 3,
         etatConge: 'Approved',
-        adressConge: '456 Winter Street',
+        adressConge: '456 Retreat Blvd',
         userUserId: user2.userId,
       },
     ],
   });
 
-  console.log('Seeding completed successfully!');
+  console.log('Database seeded successfully!');
 }
 
 main()
-  .then(() => prisma.$disconnect())
-  .catch((e) => {
-    console.error('Seeding failed:', e);
-    prisma.$disconnect();
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
     process.exit(1);
   });

@@ -3,19 +3,22 @@ import { CongeService } from './conge.service';
 import { CreateCongeDto } from './dto/create-conge.dto';
 import { UpdateCongeDto } from './dto/update-conge.dto';
 
-@Controller('user/:userId/conges')
+@Controller('conges')
 export class CongeController {
   constructor(private readonly congeService: CongeService) {}
 
-  @Post()
-  @UsePipes(ValidationPipe)
-  create(
-    @Param('userId', ParseIntPipe) userId: number,
-    @Body() createCongeDto: CreateCongeDto,
-  ) {
-    return this.congeService.create({ ...createCongeDto, userId });
+
+  @Get()
+  getAllConges() {
+    return this.congeService.getAllConges();
   }
 
+  @Post()
+  @UsePipes(ValidationPipe)
+  create(@Body() createCongeDto: CreateCongeDto,){
+    return this.congeService.create({ ...createCongeDto });
+  }
+  
   @Get()
   findAllByUser(@Param('userId', ParseIntPipe) userId: number) {
     return this.congeService.findAllByUser(userId);

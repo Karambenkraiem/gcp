@@ -7,39 +7,64 @@ import { UpdateCongeDto } from './dto/update-conge.dto';
 export class CongeService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createCongeDto: CreateCongeDto & { userId: number }) {
+  /**
+   * Create a new Conge
+   * @param createCongeDto Data transfer object for creating a Conge
+   */
+  async create(createCongeDto: CreateCongeDto) {
     return this.prisma.conge.create({
-      data: {
-        ...createCongeDto,
-        dateCreated: new Date(), // Assign current timestamp
-        etatConge: 'Pending',   // Default state
-      },
+      data:{...createCongeDto,
+        dateCreated:new Date().toISOString(),
+        dateDebut:new Date().toISOString(),
+        etatConge:"En Attente"
+      }
     });
   }
-  
-  findAllByUser(userId: number) {
-    return this.prisma.conge.findMany({
-      where: {
-        userUserId: userId, // Correct field name
-      },
-    });
-  }
-  
 
-  findOne(id: number) {
+  /**
+   * Find all Conges for a specific user
+   * @param userId ID of the user
+   */
+  async findAllByUser(userId: number) {
+    return this.prisma.conge.findMany({
+      where: { userUserId: userId }, // Ensure the correct field name is used
+    });
+  }
+
+  async getAllConges() {
+    return this.prisma.conge.findMany({
+      include: {
+        User: true, // Include User details
+      },
+    });
+  }
+  /**
+   * Find a specific Conge by ID
+   * @param id ID of the Conge
+   */
+  async findOne(id: number) {
     return this.prisma.conge.findUnique({
       where: { id },
     });
   }
 
-  update(id: number, updateCongeDto: UpdateCongeDto) {
+  /**
+   * Update a Conge by ID
+   * @param id ID of the Conge
+   * @param updateCongeDto Data transfer object for updating a Conge
+   */
+  async update(id: number, updateCongeDto: UpdateCongeDto) {
     return this.prisma.conge.update({
-      data: updateCongeDto,
       where: { id },
+      data: updateCongeDto,
     });
   }
 
-  remove(id: number) {
+  /**
+   * Delete a Conge by ID
+   * @param id ID of the Conge
+   */
+  async remove(id: number) {
     return this.prisma.conge.delete({
       where: { id },
     });
