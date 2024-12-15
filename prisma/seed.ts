@@ -37,6 +37,7 @@ async function main() {
         nbreJour: 5,
         etatConge: 'Pending',
         adressConge: '123 Vacation Lane',
+        soldeConge :10,
         userUserId: user1.userId,
       },
       {
@@ -45,6 +46,8 @@ async function main() {
         nbreJour: 3,
         etatConge: 'Approved',
         adressConge: '456 Retreat Blvd',
+        soldeConge :14,
+
         userUserId: user2.userId,
       },
     ],

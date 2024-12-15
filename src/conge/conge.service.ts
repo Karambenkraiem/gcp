@@ -27,7 +27,7 @@ export class CongeService {
    */
   async findAllByUser(userId: number) {
     return this.prisma.conge.findMany({
-      where: { userUserId: userId }, // Ensure the correct field name is used
+      where: { userUserId: userId },
     });
   }
 

@@ -19,7 +19,7 @@ export class CongeController {
     return this.congeService.create({ ...createCongeDto });
   }
   
-  @Get()
+  @Get(':userId')
   findAllByUser(@Param('userId', ParseIntPipe) userId: number) {
     return this.congeService.findAllByUser(userId);
   }

@@ -21,7 +21,14 @@ export class UserService {
     // Fetch the congés for the specified userId from the database
     return this.prisma.conge.findMany({
       where: {
-        userUserId: userId,  // Ensure the conge is associated with the correct userId
+        userUserId: userId, // Ensure the conge is associated with the correct userId
+      },
+      include: {
+        User: { 
+          select: {
+            name: true, // Replace 'name' with the actual field for the user's name
+          },
+        },
       },
     });
   }

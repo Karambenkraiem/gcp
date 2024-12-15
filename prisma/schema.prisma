@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  userId   Int     @id 
+  userId   Int     @id
   password String
   email    String  @unique
   name     String?
@@ -23,7 +23,8 @@ model Conge {
   nbreJour    Int
   etatConge   String
   adressConge String
+  soldeConge  Int
 
-  User        User?    @relation(fields: [userUserId], references: [userId])
-  userUserId  Int?
+  User       User? @relation(fields: [userUserId], references: [userId])
+  userUserId Int?
 }

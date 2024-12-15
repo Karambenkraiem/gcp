@@ -18,6 +18,7 @@ CREATE TABLE `Conge` (
     `nbreJour` INTEGER NOT NULL,
     `etatConge` VARCHAR(191) NOT NULL,
     `adressConge` VARCHAR(191) NOT NULL,
+    `soldeConge` INTEGER NOT NULL,
     `userUserId` INTEGER NULL,
 
     PRIMARY KEY (`id`)

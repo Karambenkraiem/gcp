@@ -8,6 +8,7 @@ export class CreateCongeDto implements Prisma.CongeCreateInput{
   nbreJour: number;
   etatConge: string;
   adressConge: string;
+  soldeConge: number;
   User?: Prisma.UserCreateNestedOneWithoutCongeInput;
   }
   

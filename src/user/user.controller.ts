@@ -23,9 +23,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);  // Using `+id` to cast the id to a number
+  @Get(':userId')
+  findOne(@Param('userId') userId: string) {
+    return this.userService.findOne(+userId);  // Using `+id` to cast the id to a number
   }
 
   @Patch(':id')
