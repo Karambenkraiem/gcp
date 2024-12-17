@@ -25,7 +25,6 @@ model Conge {
   nbreJour    Int
   etatConge   String?
   adressConge String?
-
   User       User? @relation(fields: [userUserId], references: [userId])
   userUserId Int?
 }

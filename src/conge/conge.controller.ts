@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe, Patch } from '@nestjs/common';
 import { CongeService } from './conge.service';
 import { CreateCongeDto } from './dto/create-conge.dto';
 import { UpdateCongeDto } from './dto/update-conge.dto';
@@ -18,6 +18,11 @@ export class CongeController {
   create(@Body() createCongeDto: CreateCongeDto,){
     return this.congeService.create(createCongeDto);
   }
+
+  @Patch(':id')
+    update(@Param('id') id: string, @Body() updateCongeDto: UpdateCongeDto) {
+      return this.congeService.update(+id, updateCongeDto);
+    }
   
   @Get(':userId')
   findAllByUser(@Param('userId', ParseIntPipe) userId: number) {
