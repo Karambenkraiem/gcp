@@ -16,7 +16,7 @@ export class CongeController {
   @Post()
   @UsePipes(ValidationPipe)
   create(@Body() createCongeDto: CreateCongeDto,){
-    return this.congeService.create({ ...createCongeDto });
+    return this.congeService.create(createCongeDto);
   }
   
   @Get(':userId')

@@ -13,6 +13,8 @@ async function main() {
       password: 'password123', // Use hashed passwords in production
       name: 'John Doe',
       posts: 'First post',
+      soldeConge: 12,
+
     },
   });
 
@@ -24,6 +26,7 @@ async function main() {
       email: 'jane.doe@example.com',
       password: 'securepassword', // Use hashed passwords in production
       name: 'Jane Doe',
+      soldeConge: 14,
       posts: 'Another post',
     },
   });
@@ -37,7 +40,6 @@ async function main() {
         nbreJour: 5,
         etatConge: 'Pending',
         adressConge: '123 Vacation Lane',
-        soldeConge :10,
         userUserId: user1.userId,
       },
       {
@@ -46,7 +48,6 @@ async function main() {
         nbreJour: 3,
         etatConge: 'Approved',
         adressConge: '456 Retreat Blvd',
-        soldeConge :14,
 
         userUserId: user2.userId,
       },

@@ -8,12 +8,14 @@ generator client {
 }
 
 model User {
-  userId   Int     @id
-  password String
-  email    String  @unique
-  name     String?
-  posts    String
-  Conge    Conge[]
+  userId     Int     @id
+  password   String
+  email      String  @unique
+  name       String?
+  posts      String
+  soldeConge Int?
+
+  Conge Conge[]
 }
 
 model Conge {
@@ -21,9 +23,8 @@ model Conge {
   dateCreated DateTime @default(now()) // Automatically set the current date
   dateDebut   DateTime
   nbreJour    Int
-  etatConge   String
-  adressConge String
-  soldeConge  Int
+  etatConge   String?
+  adressConge String?
 
   User       User? @relation(fields: [userUserId], references: [userId])
   userUserId Int?
