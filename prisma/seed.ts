@@ -11,6 +11,7 @@ async function main() {
       userId: 1,
       email: 'john.doe@example.com',
       password: 'password123', // Use hashed passwords in production
+      role:'user',
       name: 'John Doe',
       posts: 'First post',
       soldeConge: 12,
@@ -25,6 +26,7 @@ async function main() {
       userId: 2,
       email: 'jane.doe@example.com',
       password: 'securepassword', // Use hashed passwords in production
+      role: 'admin',
       name: 'Jane Doe',
       soldeConge: 14,
       posts: 'Another post',
