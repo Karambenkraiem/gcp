@@ -42,6 +42,23 @@ export class UserService {
       
     });
   }
+
+
+
+
+// Adding 2 jours automatically chaque mois -----------------------
+  async updateSoldeCongeMonthly() {
+    return this.prisma.user.updateMany({
+      data: {
+        soldeConge: {
+          increment: 2, // Ajoute 2 jours au champ `soldeConge`
+        },
+      },
+    });
+  }
+
+//-----------------------------------------------------------------
+
   
 
   update(userId: number, updateUserDto: UpdateUserDto) {

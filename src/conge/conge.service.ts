@@ -48,17 +48,67 @@ export class CongeService {
     });
   }
 
-  /**
-   * Update a Conge by ID
-   * @param id ID of the Conge
-   * @param updateCongeDto Data transfer object for updating a Conge
-   */
+  
   async update(id: number, updateCongeDto: UpdateCongeDto) {
+    // Find the existing Conge record
+    const conge = await this.prisma.conge.findUnique({
+      where: { id },
+      include: { User: true }, // Include user details to access soldeConge
+    });
+  
+    if (!conge) {
+      throw new Error('Congé not found');
+    }
+  
+    let updatedData = { ...updateCongeDto };
+  
+    // Handle soldeConge update based on state transitions
+    if (conge.etatConge === 'Accepté' && updateCongeDto.etatConge !== 'Accepté') {
+      // Etat changes from "Accepté" to something else
+      const newSoldeConge = (conge.User?.soldeConge || 0) + conge.nbreJour;
+  
+      // Update the user's soldeConge in the database
+      await this.prisma.user.update({
+        where: { userId: conge.userUserId },
+        data: { soldeConge: newSoldeConge },
+      });
+    } else if (updateCongeDto.etatConge === 'Accepté' && conge.etatConge !== 'Accepté') {
+      // Etat changes to "Accepté"
+      const newSoldeConge = (conge.User?.soldeConge || 0) - conge.nbreJour;
+  
+      // Update the user's soldeConge in the database
+      await this.prisma.user.update({
+        where: { userId: conge.userUserId },
+        data: { soldeConge: newSoldeConge },
+      });
+    }
+  
+    // Update the Conge record
     return this.prisma.conge.update({
       where: { id },
-      data: updateCongeDto,
+      data: updatedData,
     });
   }
+  
+
+  // --------------ADDING 2 JOURS CHAQUE MOIS: 
+  
+
+
+
+
+
+  
+//------------------------------------------------
+
+
+
+  // async update(id: number, updateCongeDto: UpdateCongeDto) {
+  //   return this.prisma.conge.update({
+  //     where: { id },
+  //     data: updateCongeDto,
+  //   });
+  // }
 
   /**
    * Delete a Conge by ID

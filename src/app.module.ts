@@ -4,9 +4,15 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CongeModule } from './conge/conge.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [UserModule, PrismaModule, CongeModule],
+  imports: [UserModule,
+    ScheduleModule.forRoot(),
+     PrismaModule, 
+     CongeModule,
+         
+    ],
   controllers: [AppController],
   providers: [AppService],
 })
