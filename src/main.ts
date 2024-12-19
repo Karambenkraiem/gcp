@@ -8,7 +8,8 @@ async function bootstrap() {
 
   // Activer CORS pour autoriser le frontend sur http://localhost:3003
   app.enableCors({
-    origin: 'http://localhost:3003', // Frontend URL
+    origin: 'https://gesconper-5h10iuf94-karambenkraiems-projects.vercel.app/', // Frontend URL
+    // origin: 'http://localhost:3003', // Frontend URL
     methods: 'GET,POST,PATCH,DELETE', // Méthodes autorisées
     allowedHeaders: 'Content-Type, Authorization', // En-têtes autorisés
   });
